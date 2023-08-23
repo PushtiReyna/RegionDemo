@@ -1,7 +1,15 @@
+using Microsoft.EntityFrameworkCore;
+using Region.Models;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+IConfiguration configuration = new ConfigurationBuilder()
+   .AddJsonFile("appsettings.json")
+    .Build();
+builder.Services.AddDbContext<RegionDbContext>(option => option.UseSqlServer(configuration.GetConnectionString("dbConnectionString")));
 
 var app = builder.Build();
 

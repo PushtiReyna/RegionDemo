@@ -16,6 +16,10 @@ build_property.GenerateRazorMetadataSourceChecksumAttributes =
 build_property.MSBuildProjectDirectory = D:\project\RegionDemo\RegionDemo\Region
 build_property._RazorSourceGeneratorDebug = 
 
+[D:/project/RegionDemo/RegionDemo/Region/Views/Country/AddCountry.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ291bnRyeVxBZGRDb3VudHJ5LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
 [D:/project/RegionDemo/RegionDemo/Region/Views/Home/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 

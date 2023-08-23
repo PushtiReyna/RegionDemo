@@ -1,0 +1,24 @@
+﻿@model Region.Models.Country
+
+
+
+<div class="col-4 offset-5">
+    <form method="post" asp-action="AddCountry">
+
+        <label>
+            Country Name:
+       
+            <input type="text"  asp-for=CountryName placeholder="Enter Country Name" />
+        </label>
+        <span asp-validation-for="CountryName" class="text-danger"></span>
+
+        <div class="m-3 text-center" style="margin-left: -47px !important;">
+            <button type="submit" class="btn btn-primary text-center">Add</button>
+            <a class="btn btn-danger m-1 text-white text-center" asp-action="AddCountry">Cancel</a>
+
+        </div>
+    </form>
+</div>
+
+
+
