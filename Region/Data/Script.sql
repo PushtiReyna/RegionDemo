@@ -29,3 +29,6 @@ CREATE TABLE City(
 	CreateOn [Datetime] Not Null,
 	UpdateOn [Datetime] Not Null
 )
+
+ ALTER TABLE Country
+ ALTER COLUMN UpdateOn Datetime  NULL;

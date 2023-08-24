@@ -5,6 +5,8 @@ namespace Region.Models;
 
 public partial class Country
 {
+    //public List<Country> countryList { get; set; }
+
     public int CountryId { get; set; }
 
     public string CountryName { get; set; } = null!;
@@ -15,5 +17,5 @@ public partial class Country
 
     public DateTime CreateOn { get; set; }
 
-    public DateTime UpdateOn { get; set; }
+    public DateTime? UpdateOn { get; set; }
 }
