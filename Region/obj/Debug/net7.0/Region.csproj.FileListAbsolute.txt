@@ -1,3 +1,11 @@
+D:\project\RegionDemo\RegionDemo\Region\obj\Debug\net7.0\Region.csproj.AssemblyReference.cache
+D:\project\RegionDemo\RegionDemo\Region\obj\Debug\net7.0\Region.GeneratedMSBuildEditorConfig.editorconfig
+D:\project\RegionDemo\RegionDemo\Region\obj\Debug\net7.0\Region.AssemblyInfoInputs.cache
+D:\project\RegionDemo\RegionDemo\Region\obj\Debug\net7.0\Region.AssemblyInfo.cs
+D:\project\RegionDemo\RegionDemo\Region\obj\Debug\net7.0\Region.csproj.CoreCompileInputs.cache
+D:\project\RegionDemo\RegionDemo\Region\obj\Debug\net7.0\Region.MvcApplicationPartsAssemblyInfo.cache
+D:\project\RegionDemo\RegionDemo\Region\obj\Debug\net7.0\Region.RazorAssemblyInfo.cache
+D:\project\RegionDemo\RegionDemo\Region\obj\Debug\net7.0\Region.RazorAssemblyInfo.cs
 D:\project\RegionDemo\RegionDemo\Region\bin\Debug\net7.0\appsettings.Development.json
 D:\project\RegionDemo\RegionDemo\Region\bin\Debug\net7.0\appsettings.json
 D:\project\RegionDemo\RegionDemo\Region\bin\Debug\net7.0\Region.staticwebassets.runtime.json
@@ -227,14 +235,6 @@ D:\project\RegionDemo\RegionDemo\Region\bin\Debug\net7.0\runtimes\win\lib\net6.0
 D:\project\RegionDemo\RegionDemo\Region\bin\Debug\net7.0\runtimes\win\lib\netstandard2.0\System.Runtime.Caching.dll
 D:\project\RegionDemo\RegionDemo\Region\bin\Debug\net7.0\runtimes\win\lib\net6.0\System.Security.Cryptography.ProtectedData.dll
 D:\project\RegionDemo\RegionDemo\Region\bin\Debug\net7.0\runtimes\win\lib\net6.0\System.Windows.Extensions.dll
-D:\project\RegionDemo\RegionDemo\Region\obj\Debug\net7.0\Region.csproj.AssemblyReference.cache
-D:\project\RegionDemo\RegionDemo\Region\obj\Debug\net7.0\Region.GeneratedMSBuildEditorConfig.editorconfig
-D:\project\RegionDemo\RegionDemo\Region\obj\Debug\net7.0\Region.AssemblyInfoInputs.cache
-D:\project\RegionDemo\RegionDemo\Region\obj\Debug\net7.0\Region.AssemblyInfo.cs
-D:\project\RegionDemo\RegionDemo\Region\obj\Debug\net7.0\Region.csproj.CoreCompileInputs.cache
-D:\project\RegionDemo\RegionDemo\Region\obj\Debug\net7.0\Region.MvcApplicationPartsAssemblyInfo.cache
-D:\project\RegionDemo\RegionDemo\Region\obj\Debug\net7.0\Region.RazorAssemblyInfo.cache
-D:\project\RegionDemo\RegionDemo\Region\obj\Debug\net7.0\Region.RazorAssemblyInfo.cs
 D:\project\RegionDemo\RegionDemo\Region\obj\Debug\net7.0\staticwebassets\msbuild.Region.Microsoft.AspNetCore.StaticWebAssets.props
 D:\project\RegionDemo\RegionDemo\Region\obj\Debug\net7.0\staticwebassets\msbuild.build.Region.props
 D:\project\RegionDemo\RegionDemo\Region\obj\Debug\net7.0\staticwebassets\msbuild.buildMultiTargeting.Region.props

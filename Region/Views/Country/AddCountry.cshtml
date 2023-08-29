@@ -1,20 +1,27 @@
 ﻿@model Region.Models.Country
 
-@*@model IEnumerable<Region.Models.Country>
-*@
+@{
+    var errorMessage = TempData["ErrorMessage"]?.ToString();
+}
+
+@if (!string.IsNullOrEmpty(errorMessage))
+{
+    <p class="text-danger" id='message'> @errorMessage</p>
+}
 
 
-<div class="col-4 offset-5" id="CreateUser">
+<div class="col-4 offset-5">
     <form method="post" asp-action="AddCountry">
 
         <label>
             Country Name:
-
-            <input type="text" asp-for=CountryName placeholder="Enter Country Name" />
         </label>
+            <input type="text" asp-for="CountryName" placeholder="Enter Country Name" />
+        
         <span asp-validation-for="CountryName" class="text-danger"></span>
 
         <div class="m-3 text-center" style="margin-right: 131px  !important;">
+
             <button type="submit" class="btn btn-primary text-center">Add</button>
             <a class="btn btn-danger m-1 text-white text-center" asp-action="AddCountry">Cancel</a>
 
@@ -27,12 +34,14 @@
     <div class="container">
         <div class="row">
 
-            <table class="table table-bordered " id="tableUser">
+            <table class="table table-bordered ">
                 <tr>
                     <th>countryId</th>
                     <th>countryname</th>
                     <th>Actions</th>
                 </tr>
+               
+
 
                 @foreach (var item in ViewBag.Country)
                 {
@@ -40,12 +49,16 @@
                         <td>@item.CountryId</td>
                         <td>@item.CountryName</td>
                         <td>
-                            <a class=" btn btn-warning m-1" asp-action="EditCountry" asp-route-id="@item.CountryId">Edit</a>
+
+
+                            <a class=" btn btn-warning m-1" asp-action="UpdateCountry" asp-route-id="@item.CountryId">Edit</a>
+
                             <a class=" btn btn-danger m-1" asp-action="DeleteCountry" asp-route-id="@item.CountryId">Delete</a>
                         </td>
 
                     </tr>
                 }
+                
 
             </table>
         </div>
@@ -53,59 +66,19 @@
 
 }
 
-@*<div id=" EditUser">
-    <form>
-        <input type="text" asp-for="CountryId" hidden readonly id="IdEdit" />
-        <label>
-            Country Name:
-
-            <input type="text" asp-for=CountryName placeholder="Enter Country Name" id="NameEdit" name="NameEdit" />
-        </label>
-        <span asp-validation-for="CountryName" class="text-danger"></span>
-
-        <div class="m-3 text-center" style="margin-right: 131px  !important;">
-            <button type="submit" class="btn btn-primary text-center" id="btnSaveEdit">Update</button>
-            <a class="btn btn-danger m-1 text-white text-center" asp-action="AddCountry">Cancel</a>
-
-        </div>
-    </form>
-</div>
-
-@section scripts
-    {
-    <script type="text/javascript">
-
-        function EditUser(Id) {
-            $.get("/Country/EditUserJ", { Id: Id }, function (data) {              //fetching data of the selected user from controller
-                if (data != null) {
-                    $("#tableUser").hide();
-                    $("#CreateUser").hide();
-                    $("#EditUser").show();
-
-                    //data contains the details of the user
-                    // now showing those details in the textbox
-
-                    $("#NameEdit").val(data.CountryName);
-                }
-            });
-        }
-
-
-        $("#btnSaveEdit").click(function () {
-            var objUser = {};                      //same action as per creating the user
-            objUser.CountryName = $("#NameEdit").val();
-            $.post("/Country/EditUserJ", { objUser: objUser }, function (data) {
-                if (data != null) {
-                    location.reload();
-                    alert("User Edited");
-                }
-                else {
-                    alert("Error");
-                }
-            });
-        })
-
-    </script>
+@section scripts{
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }
-*@
+
+
+
+
+
+
+
+
+
+
 

@@ -1,0 +1,63 @@
+﻿@model Region.Models.State
+
+@{
+    ViewData["Title"] = "AddState";
+}
+
+<div class="col-4 offset-5">
+    <form method="post" asp-action="AddState">
+        <div>
+            <label> Country: </label>
+            <select asp-for="CountryId" asp-items="ViewBag.List">
+                <option>select Country</option>
+            </select>
+            <span asp-validation-for="CountryId" class="text-danger"></span>
+        </div>
+
+        <div>
+            <label> State:</label>
+            <input type="text" asp-for="StateName" placeholder="Enter state Name" />
+
+            <span asp-validation-for="StateName" class="text-danger"></span>
+        </div>
+
+
+        <div class="m-3 text-center" style="margin-right: 131px  !important;">
+
+            <button type="submit" class="btn btn-primary text-center">Add</button>
+            <a class="btn btn-danger m-1 text-white text-center" asp-action="AddState">Cancel</a>
+
+        </div>
+    </form>
+</div>
+
+@{
+    <div class="container">
+        <div class="row">
+            <table class="table table-bordered ">
+                <tr>
+                    <th>countryName</th>
+                    <th>stateName</th>
+                    <th>Actions</th>
+                </tr>
+                @foreach (var item in ViewBag.state)
+                {
+                    <tr>
+                        <td>@item.CountryId</td>
+                        <td>@item.StateName</td>
+                        <td>
+                            <a class=" btn btn-warning m-1" asp-action="AddState" asp-route-id="@item.CountryId">Edit</a>
+                            <a class=" btn btn-danger m-1" asp-action="AddState" asp-route-id="@item.CountryId">Delete</a>
+                        </td>
+                    </tr>
+                }
+            </table>
+        </div>
+    </div>
+}
+
+@section scripts{
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
