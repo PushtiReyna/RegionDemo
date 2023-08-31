@@ -1,0 +1,12 @@
+﻿@model Region.Models.State
+
+
+<option value ="">Select state</option>
+
+@if (ViewBag.StateList!= null)
+{
+    foreach (var item in ViewBag.StateList)
+    {
+        <option value="@item.statename">@item.statename</option>
+    }
+}

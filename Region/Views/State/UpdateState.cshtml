@@ -1,0 +1,45 @@
+﻿@model Region.Models.State
+
+@{
+    var errorMessage = TempData["ErrorMessage"]?.ToString();
+}
+
+@if (!string.IsNullOrEmpty(errorMessage))
+{
+    <p class="text-danger" id='message'> @errorMessage</p>
+}
+
+<div class="col-4 offset-5">
+    <form method="post" asp-action="UpdateState">
+
+        <input type="hidden" asp-for=StateId hidden readonly />
+
+        <div>
+            <label> Country: </label>
+            <select asp-for="CountryId" asp-items="ViewBag.List">
+                <option>select Country</option>
+            </select>
+            <span asp-validation-for="CountryId" class="text-danger"></span>
+        </div>
+
+        <div>
+            <label> State:</label>
+            <input type="text" asp-for="StateName" placeholder="Enter state Name"/>
+            <span asp-validation-for="StateName" class="text-danger"></span>
+        </div>
+
+
+        <div class="m-3 text-center" style="margin-right: 131px  !important;">
+            <button type="submit" class="btn btn-primary text-center">Update</button>
+            <a class="btn btn-danger m-1 text-white text-center" asp-action="AddState">Cancel</a>
+
+        </div>
+    </form>
+</div>
+
+@section scripts{
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
+

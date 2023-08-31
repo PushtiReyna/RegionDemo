@@ -1,0 +1,105 @@
+﻿@model Region.Models.City
+
+<h1>AddCity</h1>
+
+<div class="col-4 offset-5">
+    <form method="post" asp-action="AddCity">
+        <div style="margin-bottom:20px;">
+            <label> Country: </label>
+            <select asp-for="CountryId" id="CountryId" asp-items="ViewBag.List" style="width: 183px;">
+                <option>select Country</option>
+            </select>
+
+        </div>
+
+       
+        <div style="margin-bottom:20px;">
+            <label> State: </label>
+            <select asp-for="StateId" id="StateId" asp-items="@(new SelectList(string.Empty,"StateId","StateName"))" style="width: 183px;">
+                <option>select state</option>
+            </select>
+
+        </div>
+
+      @*  <div>
+            <label> state: </label>
+            <select class="form-control" asp-for="StateId" id="StateId" asp-items="@(new SelectList(string.Empty,"StateId","StateName"))">*@
+              @*  <select asp-for="StateId" id="coumtrylist" asp-items="ViewBag.stateList">*@
+           @*<option>select</option>*@
+             @* </select>
+
+        </div>*@
+        
+
+       @* @Html.DropDownListFor(m => m.StateId, new SelectList(@ViewBag.StateList),"select state")*@
+
+        <div class="mb-2">
+            <label> City</label>
+            <input type="text" asp-for="CityName" placeholder="Enter City Name" style="margin-left: 17px;" />
+
+        </div>
+
+
+        <div class="m-3 text-center" style="margin-right: 131px  !important;">
+
+            <button type="submit" class="btn btn-primary text-center">Add</button>
+            <a class="btn btn-danger m-1 text-white text-center" asp-action="AddCity">Cancel</a>
+
+        </div>
+    </form>
+</div>
+
+
+@{
+    <div class="container">
+        <div class="row">
+            <table class="table table-bordered ">
+                <tr>
+                    <th>Country Name</th>
+                    <th>State Name</th>
+                    <th>City Name</th>
+                    <th>Actions</th>
+                </tr>
+                @foreach (var item in ViewBag.city)
+                {
+                    <tr>
+                        <td>@item.CountryName</td>
+                        <td>@item.StateName</td>
+                        <td>@item.CityName</td>
+                        <td>
+                            <a class=" btn btn-warning m-1" asp-action="UpdateCity" asp-route-id="@item.CityId">Edit</a>
+                            <a class=" btn btn-danger m-1" asp-action="DeleteCity" asp-route-id="@item.CityId">Delete</a>
+                        </td>
+                    </tr>
+                }
+            </table>
+        </div>
+    </div>
+}
+
+
+
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        $('#CountryId').change(function (){
+
+            var url = '@Url.Content("~/")' + "City/Getstate";
+            var ddlsource = "#CountryId";
+            $.getJSON(url, { CountryId: $(ddlsource).val() }, function (data){
+                var items ='';
+                $("#StateId").empty();
+                $.each(data, function (i,state){
+                    items += "<option value = '" + state.value + "'>" + state.text + "</option>";
+                });
+                $("#StateId").html(items);
+            });
+        });
+    });
+  </script>
+
+
+

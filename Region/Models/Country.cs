@@ -6,8 +6,6 @@ namespace Region.Models;
 
 public partial class Country
 {
-    //public List<Country> countryList { get; set; }
-
     public int CountryId { get; set; }
 
     [Required(ErrorMessage = "Please Country Name"), MaxLength(50)]

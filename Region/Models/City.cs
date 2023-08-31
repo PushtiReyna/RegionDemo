@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Region.Models;
 
@@ -19,5 +20,12 @@ public partial class City
 
     public DateTime CreateOn { get; set; }
 
-    public DateTime UpdateOn { get; set; }
+    public DateTime? UpdateOn { get; set; }
+
+
+    [NotMapped]
+    public string CountryName { get; set; }
+
+    [NotMapped]
+    public string StateName { get; set; }
 }

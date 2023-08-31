@@ -1,22 +1,27 @@
 ﻿@model Region.Models.State
 
 @{
-    ViewData["Title"] = "AddState";
+    var errorMessage = TempData["ErrorMessage"]?.ToString();
+}
+
+@if (!string.IsNullOrEmpty(errorMessage))
+{
+    <p class="text-danger" id='message'> @errorMessage</p>
 }
 
 <div class="col-4 offset-5">
     <form method="post" asp-action="AddState">
-        <div>
+        <div style="margin-bottom:20px;">
             <label> Country: </label>
-            <select asp-for="CountryId" asp-items="ViewBag.List">
+            <select asp-for="CountryId" id="coumtrylist" asp-items="ViewBag.List" style="width: 183px;">
                 <option>select Country</option>
             </select>
             <span asp-validation-for="CountryId" class="text-danger"></span>
         </div>
 
-        <div>
+        <div class="mb-2">
             <label> State:</label>
-            <input type="text" asp-for="StateName" placeholder="Enter state Name" />
+            <input type="text" asp-for="StateName" placeholder="Enter state Name" style="margin-left: 17px;" />
 
             <span asp-validation-for="StateName" class="text-danger"></span>
         </div>
@@ -36,6 +41,7 @@
         <div class="row">
             <table class="table table-bordered ">
                 <tr>
+
                     <th>countryName</th>
                     <th>stateName</th>
                     <th>Actions</th>
@@ -43,11 +49,12 @@
                 @foreach (var item in ViewBag.state)
                 {
                     <tr>
-                        <td>@item.CountryId</td>
+
+                        <td>@item.CountryName</td>
                         <td>@item.StateName</td>
                         <td>
-                            <a class=" btn btn-warning m-1" asp-action="AddState" asp-route-id="@item.CountryId">Edit</a>
-                            <a class=" btn btn-danger m-1" asp-action="AddState" asp-route-id="@item.CountryId">Delete</a>
+                            <a class=" btn btn-warning m-1" asp-action="UpdateState" asp-route-id="@item.StateId">Edit</a>
+                            <a class=" btn btn-danger m-1" asp-action="DeleteState" asp-route-id="@item.StateId">Delete</a>
                         </td>
                     </tr>
                 }
