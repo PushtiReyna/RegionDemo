@@ -4,24 +4,22 @@
     var errorMessage = TempData["ErrorMessage"]?.ToString();
 }
 
-
-
 <div class="col-4 offset-5">
     <form method="post" asp-action="UpdateState">
 
-        <input type="hidden" asp-for=StateId hidden readonly />
+        <input type="hidden" asp-for=StateId  readonly />
 
-        <div>
+        <div class="mb-2">
             <label> Country: </label>
-            <select asp-for="CountryId" asp-items="ViewBag.countryList" style="width: 183px;">
+            <select asp-for="CountryId" asp-items="ViewBag.countryList" style="width: 183px; margin-bottom: 10px;">
                 <option>Select Country</option>
+                <span asp-validation-for="CountryId" class="text-danger"></span>
             </select>
-            <span asp-validation-for="CountryId" class="text-danger"></span>
         </div>
 
-        <div>
+        <div class="mb-2">
             <label> State:</label>
-            <input type="text" asp-for="StateName" placeholder="Enter State Name" style="margin-left: 17px; margin-top: 13px" />
+            <input type="text" asp-for="StateName" placeholder="Enter State Name" style="margin-left: 17px;" />
             <span asp-validation-for="StateName" class="text-danger"></span>
             @if (!string.IsNullOrEmpty(errorMessage))
             {

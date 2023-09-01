@@ -7,19 +7,21 @@
 <div class="col-4 offset-5">
     <form method="post" asp-action="AddCity">
 
-        <div style="margin-bottom:20px;">
+        <div class="mb-2">
             <label> Country: </label>
             <select asp-for="CountryId" id="CountryId" asp-items="ViewBag.countryList" style="width: 183px;">
-                <option>select Country</option>
+                <option>Select Country</option>
             </select>
+            <span asp-validation-for="CountryId" class="text-danger"></span>
         </div>
 
        
-        <div style="margin-bottom:20px;">
+        <div @*style="margin-bottom:20px;"*@ class="mb-2">
             <label> State: </label>
-            <select asp-for="StateId" id="StateId" asp-items="@(new SelectList(string.Empty,"StateId","StateName"))" style=" width: 183px; margin-left: 15px;" >
-                <option>select state</option>
+            <select asp-for="StateId" id="StateId" asp-items="@(new SelectList(string.Empty,"StateId","StateName"))" style=" width: 183px; margin-left: 20px;" >
+                <option>Select state</option>
             </select>
+            <span asp-validation-for="StateId" class="text-danger"></span>
 
         </div>
         
@@ -28,8 +30,8 @@
 
         <div class="mb-2">
             <label> City:</label>
-            <input type="text" asp-for="CityName" placeholder="Enter City Name" style="margin-left: 12px; width: 179px;" />
-            <span asp-validation-for="StateName" class="text-danger"></span>
+            <input type="text" asp-for="CityName" placeholder="Enter City Name" style="margin-left: 32px; width: 182px;"  />
+            <span asp-validation-for="CityName" class="text-danger"></span>
             @if (!string.IsNullOrEmpty(errorMessage))
             {
                 <p class="text-danger" id='message'> @errorMessage</p>
@@ -103,6 +105,10 @@
         $('#message').hide(3000);
     });
 </script>
+
+@{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+}
 
 
 

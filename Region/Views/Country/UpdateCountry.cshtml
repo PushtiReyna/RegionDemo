@@ -2,27 +2,33 @@
 
 @{
     var errorMessage = TempData["ErrorMessage"]?.ToString();
+    var exceptionMessage = TempData["ExceptionMessage"]?.ToString();
 }
 
-@if (!string.IsNullOrEmpty(errorMessage))
+@if (!string.IsNullOrWhiteSpace(exceptionMessage))
 {
-    <p class="text-danger" id='message'> @errorMessage</p>
+    <p class="text-center text-danger"> @exceptionMessage</p>
 }
 
 <div class="col-4 offset-5">
+
     <form method="post" asp-action="UpdateCountry">
 
-        <input type="hidden" asp-for=CountryId  hidden readonly />
-        <label>
-            Country Name:
+        <input type="hidden" asp-for=CountryId  readonly />
 
-            <input type="text" asp-for=CountryName placeholder="Enter Country Name"  />
-        </label>
-        <span asp-validation-for="CountryName" class="text-danger"></span>
+        <div>
+            <label> Country Name:</label>
+            <input type="text" asp-for=CountryName placeholder="Enter Country Name" />
+            <span asp-validation-for="CountryName" class="text-danger"></span>
+            @if (!string.IsNullOrEmpty(errorMessage))
+            {
+                <p class="text-danger" id='message'> @errorMessage</p>
+            }
+        </div>
 
         <div class="m-3 text-center" style="margin-right: 131px  !important;">
+
             <button type="submit" class="btn btn-primary text-center">Update</button>
-          
             <a class="btn btn-danger m-1 text-white text-center" asp-action="AddCountry">Cancel</a>
 
         </div>
@@ -33,4 +39,11 @@
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
+
+    <script type="text/javascript">
+        setTimeout(function () {
+            $('#message').hide(3000);
+        });
+    </script>
+
 }

@@ -8,8 +8,9 @@
     <form method="post" asp-action="AddState">
         <div style="margin-bottom:20px;">
             <label> Country: </label>
-            <select asp-for="CountryId" id="coumtrylist" asp-items="ViewBag.countryList" style="width: 183px;">
+            <select asp-for="CountryId"  id="coumtrylist" asp-items="ViewBag.countryList" style="width: 183px;">
                 <option>Select Country</option>
+                
             </select>
             <span asp-validation-for="CountryId" class="text-danger"></span>
         </div>

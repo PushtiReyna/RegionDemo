@@ -13,21 +13,23 @@
         <div class=" mb-2">
             <label> Country: </label>
             <select asp-for="CountryId" id="CountryId" asp-items="ViewBag.countryList" style="width: 183px;">
-                <option>select Country</option>
+                <option>Select Country</option>
             </select>
+            <span asp-validation-for="CountryId" class="text-danger"></span>
         </div>
 
 
-        <div >
+        <div class=" mb-2" >
             <label> State: </label>
-            <select asp-for="StateId" id="StateId" asp-items="ViewBag.stateName " style=" width: 184px; margin-left: 25px;" SelectedValue>
-                <option>select state</option>
+            <select asp-for="StateId" id="StateId" asp-items="ViewBag.stateName " style=" width: 183px; margin-left: 20px;" SelectedValue>
+                <option>Select state</option>
             </select>
+            <span asp-validation-for="StateId" class="text-danger"></span>
         </div>
 
         <div class="mb-2">
             <label> City</label>
-            <input type="text" asp-for="CityName" placeholder="Enter City Name" style="margin-left: 40px;" />
+            <input type="text" asp-for="CityName" placeholder="Enter City Name" style="margin-left: 32px; width: 182px;" />
             <span asp-validation-for="CityName" class="text-danger"></span>
             @if (!string.IsNullOrEmpty(errorMessage))
             {

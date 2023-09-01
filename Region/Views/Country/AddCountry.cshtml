@@ -2,10 +2,16 @@
 
 @{
     var errorMessage = TempData["ErrorMessage"]?.ToString();
+    var exceptionMessage = TempData["ExceptionMessage"]?.ToString();
 }
 
+@if (!string.IsNullOrWhiteSpace(exceptionMessage))
+{
+    <p class="text-center text-danger"> @exceptionMessage</p>
+}
 
 <div class="col-4 offset-5">
+
     <form method="post" asp-action="AddCountry">
        
         <div>

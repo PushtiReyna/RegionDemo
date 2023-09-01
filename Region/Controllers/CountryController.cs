@@ -14,94 +14,131 @@ namespace Region.Controllers
             _db = db;
         }
 
-
         [HttpGet]
         public IActionResult AddCountry()
         {
-            var CountryList = _db.Countries.ToList();
-            ViewBag.Country = CountryList;
-            
-           return View();
+            try
+            {
+                var CountryList = _db.Countries.ToList();
+                ViewBag.Country = CountryList;
+
+                return View();
+            }
+            catch (Exception ex)
+            {
+                TempData["ExceptionMessage"] = ex.Message;
+                return View();
+            }
         }
 
         [HttpPost]
         public IActionResult AddCountry(Country country)
         {
 
-            if (ModelState.IsValid)
+            try
             {
-                if (_db.Countries.Where(u => u.CountryName == country.CountryName).Any())
+                if (ModelState.IsValid)
                 {
-                    TempData["ErrorMessage"] = "Country is already exists.";
-                    return RedirectToAction("AddCountry");
-                }
-                else
-                {
-                    var addCountry = new Country()
+                    if (_db.Countries.Where(u => u.CountryName == country.CountryName).Any())
                     {
-                        CountryName = country.CountryName,
-                        CreateOn = DateTime.Now,
-                        IsActive = true,
-                    };
-                    _db.Countries.Add(addCountry);
-                    _db.SaveChanges();
-                    return RedirectToAction("AddCountry");
+                        TempData["ErrorMessage"] = "Country is already exists.";
+                        return RedirectToAction("AddCountry");
+                    }
+                    else
+                    {
+                        var addCountry = new Country()
+                        {
+                            CountryName = country.CountryName,
+                            CreateOn = DateTime.Now,
+                            IsActive = true,
+                        };
+                        _db.Countries.Add(addCountry);
+                        _db.SaveChanges();
+                        return RedirectToAction("AddCountry");
+                    }
                 }
+                return RedirectToAction("AddCountry");
             }
-            return RedirectToAction("AddCountry");
+            catch (Exception ex)
+            {
+                TempData["ExceptionMessage"] = ex.Message;
+                return View();
+            }
 
         }
 
         [HttpGet]
         public IActionResult UpdateCountry(int id)
         {
-            var detailCountry = _db.Countries.FirstOrDefault(x => x.CountryId == id);
-            if (detailCountry != null)
+            try
             {
-
-                return View(detailCountry);
+                var detailCountry = _db.Countries.FirstOrDefault(x => x.CountryId == id);
+                if (detailCountry != null)
+                {
+                    return View(detailCountry);
+                }
+                return RedirectToAction("AddCountry");
             }
-            return RedirectToAction("AddCountry");
+            catch (Exception ex)
+            {
+                TempData["ExceptionMessage"] = ex.Message;
+                return View();
+            }
         }
 
         [HttpPost]
         public IActionResult UpdateCountry(Country country)
         {
-            var updateCountry = _db.Countries.FirstOrDefault(x => x.CountryId == country.CountryId);
-            if (updateCountry != null)
+            try
             {
-                updateCountry.CountryName = country.CountryName;
-                updateCountry.UpdateOn = DateTime.Now;
+                var updateCountry = _db.Countries.FirstOrDefault(x => x.CountryId == country.CountryId);
+                if (updateCountry != null)
+                {
+                    updateCountry.CountryName = country.CountryName;
+                    updateCountry.UpdateOn = DateTime.Now;
 
-                if (_db.Countries.Where(u => u.CountryName == country.CountryName && u.CountryId != country.CountryId).Any())
-                {
-                    TempData["ErrorMessage"] = "Country is already exists.";
-                    return View();
+                    if (_db.Countries.Where(u => u.CountryName == country.CountryName && u.CountryId != country.CountryId).Any())
+                    {
+                        TempData["ErrorMessage"] = "Country is already exists.";
+                        return View();
+                    }
+                    else
+                    {
+                        _db.Entry(updateCountry).State = EntityState.Modified;
+                        _db.SaveChanges();
+                        return RedirectToAction("AddCountry");
+                    }
                 }
-                else
-                {
-                    _db.Entry(updateCountry).State = EntityState.Modified;
-                    _db.SaveChanges();
-                    return RedirectToAction("AddCountry");
-                }
+                return View();
             }
-            return View();
+            catch (Exception ex)
+            {
+                TempData["ExceptionMessage"] = ex.Message;
+                return View();
+            }
         }
 
         public IActionResult DeleteCountry(int id)
         {
-            var deleteCountry = _db.Countries.FirstOrDefault(x => x.CountryId == id);
-            if (deleteCountry != null)
+            try
             {
-                if (deleteCountry.IsActive == true && deleteCountry.IsDelete == false)
+                var deleteCountry = _db.Countries.FirstOrDefault(x => x.CountryId == id);
+                if (deleteCountry != null)
                 {
-                    deleteCountry.IsDelete = true;
-                    _db.Countries.Remove(deleteCountry);
-                    _db.SaveChanges();
-                    return RedirectToAction("AddCountry");
+                    if (deleteCountry.IsActive == true && deleteCountry.IsDelete == false)
+                    {
+                        deleteCountry.IsDelete = true;
+                        _db.Countries.Remove(deleteCountry);
+                        _db.SaveChanges();
+                        return RedirectToAction("AddCountry");
+                    }
                 }
+                return RedirectToAction("AddCountry");
             }
-            return RedirectToAction("AddCountry");
+            catch (Exception ex)
+            {
+                throw;
+            }
         }
 
     }

@@ -18,119 +18,155 @@ namespace Region.Controllers
         [HttpGet]
         public IActionResult AddState()
         {
-            CountryList();
-
-            //var ListState = _db.States.ToList();
-            // ViewBag.state = ListState;
-            
-            List<State> stateList = new List<State>();
-            State state = new State();
-            var StateList = _db.States.ToList();
-
-            foreach (var item in StateList)
+            try
             {
-                var countryName = _db.Countries.FirstOrDefault(x => x.CountryId == item.CountryId);
-                state = new State();
-                state.StateName = item.StateName;
-                state.StateId = item.StateId;
-                if(countryName != null)
+                CountryList();
+
+                //var ListState = _db.States.ToList();
+                // ViewBag.state = ListState;
+
+                List<State> stateList = new List<State>();
+                State state = new State();
+                var StateList = _db.States.ToList();
+
+                foreach (var item in StateList)
                 {
-                    state.CountryName = countryName.CountryName;
+                    var countryName = _db.Countries.FirstOrDefault(x => x.CountryId == Convert.ToInt64(item.CountryId));
+                    state = new State();
+                    state.StateName = item.StateName;
+                    state.StateId = item.StateId;
+                    if (countryName != null)
+                    {
+                        state.CountryName = countryName.CountryName;
+                    }
+                    stateList.Add(state);
                 }
-                stateList.Add(state);
+                ViewBag.state = stateList;
+                return View();
             }
-            ViewBag.state = stateList;
-            return View();
+            catch (Exception ex)
+            {
+                throw;
+            }
         }
 
         [HttpPost]
         public IActionResult AddState(State state)
         {
-            CountryList();
-
-            ModelState.Remove("CountryId");
-            ModelState.Remove("CountryName");
-            ModelState.Remove("Country");
-            if (ModelState.IsValid)
+            try
             {
-                if (_db.States.Where(u => u.StateName == state.StateName).Any())
-                {
-                    TempData["ErrorMessage"] = "State is already exists.";
-                    return RedirectToAction("AddState");
-                }
-                else
-                {
+                CountryList();
 
-                    var StateAdd = new State()
+                // ModelState.Remove("CountryId");
+                ModelState.Remove("CountryName");
+                ModelState.Remove("Country");
+                if (ModelState.IsValid)
+                {
+                    if (_db.States.Where(u => u.StateName == state.StateName).Any())
                     {
-                        CountryId = state.CountryId,
-                        StateName = state.StateName,
-                        CreateOn = DateTime.Now,
-                        IsActive = true,
-                    };
-                    _db.States.Add(StateAdd);
-                    _db.SaveChanges();
+                        TempData["ErrorMessage"] = "State is already exists.";
+                        return RedirectToAction("AddState");
+                    }
+                    else
+                    {
+                        var StateAdd = new State()
+                        {
+                            CountryId = state.CountryId,
+                           
+                            StateName = state.StateName,
+                            CreateOn = DateTime.Now,
+                            IsActive = true,
 
+                        };
+                        
+                        _db.States.Add(StateAdd);
+                        _db.SaveChanges();
 
-                    return RedirectToAction("AddState");
+                        return RedirectToAction("AddState");
+                    }
                 }
+                return RedirectToAction("AddState");
             }
-            return RedirectToAction("AddState");
+            catch (Exception ex)
+            {
+                throw;
+            }
         }
 
         [HttpGet]
         public IActionResult UpdateState(int id)
         {
-            CountryList();
-
-            var detailState = _db.States.FirstOrDefault(x => x.StateId == id);
-            if (detailState != null)
+            try
             {
+                CountryList();
 
-                return View(detailState);
+                var detailState = _db.States.FirstOrDefault(x => x.StateId == id);
+                if (detailState != null)
+                {
+
+                    return View(detailState);
+                }
+                return RedirectToAction("AddState");
             }
-            return RedirectToAction("AddState");
+            catch (Exception ex)
+            {
+                throw;
+            }
         }
 
         [HttpPost]
         public IActionResult UpdateState(State state)
         {
-            CountryList();
-            var updateState = _db.States.FirstOrDefault(x => x.StateId == state.StateId);
-            if (updateState != null)
+            try
             {
-                updateState.CountryId = state.CountryId;
-                updateState.StateName = state.StateName;
-                updateState.UpdateOn = DateTime.Now;
-                if (_db.States.Where(u => u.StateName == state.StateName && u.StateId != state.StateId).Any())
+                CountryList();
+                var updateState = _db.States.FirstOrDefault(x => x.StateId == state.StateId);
+                if (updateState != null)
                 {
-                    TempData["ErrorMessage"] = "state is already exists.";
-                    return View();
+                    updateState.CountryId = state.CountryId;
+                    updateState.StateName = state.StateName;
+                    updateState.UpdateOn = DateTime.Now;
+                    if (_db.States.Where(u => u.StateName == state.StateName && u.StateId != state.StateId).Any())
+                    {
+                        TempData["ErrorMessage"] = "state is already exists.";
+                        return View();
+                    }
+                    else
+                    {
+                        _db.Entry(updateState).State = EntityState.Modified;
+                        _db.SaveChanges();
+                        return RedirectToAction("AddState");
+                    }
                 }
-                else
-                {
-                    _db.Entry(updateState).State = EntityState.Modified;
-                    _db.SaveChanges();
-                    return RedirectToAction("AddState");
-                }
+                return View();
             }
-            return View();
+            catch (Exception ex)
+            {
+                throw;
+            }
         }
 
         public IActionResult DeleteState(int id)
         {
-            var deleteState = _db.States.FirstOrDefault(x => x.StateId == id);
-            if (deleteState != null)
+            try
             {
-                if (deleteState.IsActive == true && deleteState.IsDelete == false)
+                var deleteState = _db.States.FirstOrDefault(x => x.StateId == id);
+                if (deleteState != null)
                 {
-                    deleteState.IsDelete = true;
-                    _db.States.Remove(deleteState);
-                    _db.SaveChanges();
-                    return RedirectToAction("AddState");
+                    if (deleteState.IsActive == true && deleteState.IsDelete == false)
+                    {
+                        deleteState.IsDelete = true;
+                        _db.States.Remove(deleteState);
+                        _db.SaveChanges();
+                        return RedirectToAction("AddState");
+                    }
                 }
+                return RedirectToAction("AddState");
             }
-            return RedirectToAction("AddState");
+            catch (Exception ex)
+            {
+                throw;
+            }
         }
 
 

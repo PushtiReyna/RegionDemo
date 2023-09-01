@@ -15,140 +15,175 @@ namespace Region.Controllers
         [HttpGet]
         public IActionResult AddCity()
         {
-            CountryList();
-
-            List<City> cityList = new List<City>();
-            City city = new City();
-            var CityList = _db.Cities.ToList();
-
-            foreach (var item in CityList)
+            try
             {
-                var countryName = _db.Countries.FirstOrDefault(x => x.CountryId == item.CountryId);
-                var stateName = _db.States.FirstOrDefault(x => x.StateId == item.StateId);
-                city = new City();
-                city.CityName = item.CityName;
-                city.CityId = item.CityId;
-               
-                if (countryName != null)
-                {
-                    city.CountryName = countryName.CountryName;
-                }
-                if(stateName != null)
-                {
-                    city.StateName = stateName.StateName;
-                }
+                CountryList();
 
-                cityList.Add(city);
+                List<City> cityList = new List<City>();
+                City city = new City();
+                var CityList = _db.Cities.ToList();
+
+                foreach (var item in CityList)
+                {
+                    var countryName = _db.Countries.FirstOrDefault(x => x.CountryId == item.CountryId);
+                    var stateName = _db.States.FirstOrDefault(x => x.StateId == item.StateId);
+                    city = new City();
+                    city.CityName = item.CityName;
+                    city.CityId = item.CityId;
+
+                    if (countryName != null)
+                    {
+                        city.CountryName = countryName.CountryName;
+                    }
+                    if (stateName != null)
+                    {
+                        city.StateName = stateName.StateName;
+                    }
+
+                    cityList.Add(city);
+                }
+                ViewBag.city = cityList;
+
+                return View();
             }
-            ViewBag.city = cityList;
-         
-            return View();
+            catch (Exception ex)
+            {
+                throw;
+            }
         }
 
         [HttpPost]
         public IActionResult AddCity(City city)
         {
-            
-            CountryList();
 
-            ModelState.Remove("CountryId");
-            ModelState.Remove("CountryName");
-            ModelState.Remove("StateId");
-            ModelState.Remove("StateName");
-
-            if (ModelState.IsValid)
-
+            try
             {
-                if (_db.Cities.Where(u => u.CityName == city.CityName).Any())
-                {
-                    TempData["ErrorMessage"] = "City is already exists.";
-                    return RedirectToAction("AddCity");
-                }
-                else
-                {
-                    var CityAdd = new City()
-                    {
-                        CountryId = city.CountryId,
-                        StateId = city.StateId,
-                        CityName = city.CityName,
+                CountryList();
 
-                        CreateOn = DateTime.Now,
-                        IsActive = true,
-                    };
-                    _db.Cities.Add(CityAdd);
-                    _db.SaveChanges();
-                    return RedirectToAction("AddCity");
+                ModelState.Remove("CountryId");
+                ModelState.Remove("CountryName");
+                ModelState.Remove("StateId");
+                ModelState.Remove("StateName");
+
+                if (ModelState.IsValid)
+
+                {
+                    if (_db.Cities.Where(u => u.CityName == city.CityName).Any())
+                    {
+                        TempData["ErrorMessage"] = "City is already exists.";
+                        return RedirectToAction("AddCity");
+                    }
+                    else
+                    {
+                        var CityAdd = new City()
+                        {
+                            CountryId = city.CountryId,
+                            StateId = city.StateId,
+                            CityName = city.CityName,
+
+                            CreateOn = DateTime.Now,
+                            IsActive = true,
+                        };
+                        _db.Cities.Add(CityAdd);
+                        _db.SaveChanges();
+                        return RedirectToAction("AddCity");
+                    }
                 }
+                return RedirectToAction("AddCity");
             }
-            return RedirectToAction("AddCity");
+            catch (Exception ex)
+            {
+                throw;
+            }
         }
 
        [HttpGet]
         public IActionResult UpdateCity(int id)
         {
-            CountryList();
-
-            var detailCity = _db.Cities.FirstOrDefault(x => x.CityId == id);
-
-            if(detailCity != null)
+            try
             {
-                List<State> statelist = new List<State>();
-                statelist = (from state in _db.States where state.CountryId == detailCity.CountryId select state).ToList();
-                ViewBag.stateName = new SelectList(statelist, "StateId", "StateName").OrderBy(a => a.Text);
+                CountryList();
 
-                return View(detailCity);
+                var detailCity = _db.Cities.FirstOrDefault(x => x.CityId == id);
+
+                if (detailCity != null)
+                {
+                    List<State> statelist = new List<State>();
+                    statelist = (from state in _db.States where state.CountryId == detailCity.CountryId select state).ToList();
+                    ViewBag.stateName = new SelectList(statelist, "StateId", "StateName").OrderBy(a => a.Text);
+
+                    return View(detailCity);
+                }
+                return RedirectToAction("AddCity");
             }
-            return RedirectToAction("AddCity");
+            catch (Exception ex)
+            {
+                throw;
+            }
         }
 
         [HttpPost]
         public IActionResult UpdateCity(City city)
         {
-            CountryList();
-
-            var updateCity = _db.Cities.FirstOrDefault(x => x.CityId == city.CityId);
-            if (updateCity != null)
+            try
             {
-                List<State> statelist = new List<State>();
-                statelist = (from state in _db.States where state.CountryId == updateCity.CountryId select state).ToList();
-                ViewBag.stateName = new SelectList(statelist, "StateId", "StateName").OrderBy(a => a.Text);
+                CountryList();
 
-
-                updateCity.CountryId = city.CountryId;
-                updateCity.StateId = city.StateId;
-                updateCity.CityName = city.CityName;
-                updateCity.UpdateOn = DateTime.Now;
-
-                if (_db.Cities.Where(u => u.CityName == city.CityName && u.CityId != city.CityId).Any())
+                var updateCity = _db.Cities.FirstOrDefault(x => x.CityId == city.CityId);
+                if (updateCity != null)
                 {
-                    TempData["ErrorMessage"] = "City is already exists.";
-                    return View();
+                    List<State> statelist = new List<State>();
+                    statelist = (from state in _db.States where state.CountryId == updateCity.CountryId select state).ToList();
+                    ViewBag.stateName = new SelectList(statelist, "StateId", "StateName").OrderBy(a => a.Text);
+
+
+                    updateCity.CountryId = city.CountryId;
+                    updateCity.StateId = city.StateId;
+                    updateCity.CityName = city.CityName;
+                    updateCity.UpdateOn = DateTime.Now;
+
+                    if (_db.Cities.Where(u => u.CityName == city.CityName && u.CityId != city.CityId).Any())
+                    {
+                        TempData["ErrorMessage"] = "City is already exists.";
+                        return View();
+                    }
+                    else
+                    {
+                        _db.Entry(updateCity).State = EntityState.Modified;
+                        _db.SaveChanges();
+                        return RedirectToAction("AddCity");
+                    }
                 }
-                else
-                {
-                    _db.Entry(updateCity).State = EntityState.Modified;
-                    _db.SaveChanges();
-                    return RedirectToAction("AddCity");
-                }
+
+                return View();
             }
-
-            return View();
+            catch (Exception ex)
+            {
+                throw;
+            }
         }
 
         public IActionResult DeleteCity(int id)
         {
-            var deleteCity = _db.Cities.FirstOrDefault(x => x.CityId == id);
-            if (deleteCity != null)
+            try
             {
-                if (deleteCity.IsActive == true && deleteCity.IsDelete == false)
+                var deleteCity = _db.Cities.FirstOrDefault(x => x.CityId == id);
+                if (deleteCity != null)
                 {
-                    deleteCity.IsDelete = true;
-                    _db.Cities.Remove(deleteCity);
-                    _db.SaveChanges();
-                    return RedirectToAction("AddCity");
+                    if (deleteCity.IsActive == true && deleteCity.IsDelete == false)
+                    {
+                        deleteCity.IsDelete = true;
+                        _db.Cities.Remove(deleteCity);
+                        _db.SaveChanges();
+                        return RedirectToAction("AddCity");
+                    }
                 }
+                return RedirectToAction("AddCity");
             }
-            return RedirectToAction("AddCity");
+            catch (Exception ex)
+            {
+                throw;
+            }
         }
 
 
@@ -171,11 +206,11 @@ namespace Region.Controllers
 
         public JsonResult Getstate(int CountryId)
         {
-            List<State> statelist = new List<State>();
-            statelist = (from state in _db.States where state.CountryId == CountryId select state).ToList();
-            statelist.Insert(0, new State { StateId = 0, StateName = "Select State" });
-            ViewBag.StateList = new SelectList(statelist, "StateId", "StateName");
-            return Json(new SelectList(statelist, "StateId", "StateName"));
+            List<State> stateList = new List<State>();
+            stateList = (from state in _db.States where state.CountryId == CountryId select state).ToList();
+            stateList.Insert(0, new State { StateId = 0, StateName = "Select State" });
+            //ViewBag.StateList = new SelectList(statelist, "StateId", "StateName");
+            return Json(new SelectList(stateList, "StateId", "StateName"));
         }
 
     }
