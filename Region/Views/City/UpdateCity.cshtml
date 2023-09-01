@@ -1,0 +1,88 @@
+﻿@model Region.Models.City
+
+@{
+    var errorMessage = TempData["ErrorMessage"]?.ToString();
+}
+
+<div class="col-4 offset-5">
+
+    <form method="post" asp-action="UpdateCity">
+        
+        <input type="hidden" asp-for=CityId hidden readonly />
+       
+        <div class=" mb-2">
+            <label> Country: </label>
+            <select asp-for="CountryId" id="CountryId" asp-items="ViewBag.countryList" style="width: 183px;">
+                <option>select Country</option>
+            </select>
+        </div>
+
+
+        <div >
+            <label> State: </label>
+            <select asp-for="StateId" id="StateId" asp-items="ViewBag.stateName " style=" width: 184px; margin-left: 25px;" SelectedValue>
+                <option>select state</option>
+            </select>
+        </div>
+
+        <div class="mb-2">
+            <label> City</label>
+            <input type="text" asp-for="CityName" placeholder="Enter City Name" style="margin-left: 40px;" />
+            <span asp-validation-for="CityName" class="text-danger"></span>
+            @if (!string.IsNullOrEmpty(errorMessage))
+            {
+                <p class="text-danger" id='message'> @errorMessage</p>
+            }
+        </div>
+
+
+        <div class="m-3 text-center" style="margin-right: 131px  !important;">
+
+            <button type="submit" class="btn btn-primary text-center">Update</button>
+            <a class="btn btn-danger m-1 text-white text-center" asp-action="AddCity">Cancel</a>
+
+        </div>
+    </form>
+</div>
+
+
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+
+        debugger;
+
+        $('#CountryId').change(function () {
+
+            var url = '@Url.Content("~/")' + "City/Getstate";
+            var ddlsource = "#CountryId";
+
+            $.getJSON(url, { CountryId: $(ddlsource).val() }, function (data) {
+                var items = '';
+                $("#StateId").empty();
+
+                $.each(data, function (i, state) {
+                    items += "<option value = '" + state.value + "'>" + state.text + "</option>";
+                });
+
+                $("#StateId").html(items);
+            });
+        });
+    });
+
+</script>
+
+<script type="text/javascript">
+    setTimeout(function () {
+        $('#message').hide(3000);
+    });
+</script>
+
+@{
+    await Html.RenderPartialAsync("_ValidationScriptsPartial");
+}
+
+

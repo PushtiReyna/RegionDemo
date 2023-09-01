@@ -12,8 +12,8 @@ public partial class State
     [Required(ErrorMessage = "Please Select Country.")]
     public int? CountryId { get; set; }
 
-    [Required(ErrorMessage = "Please State Name"), MaxLength(50)]
-    [RegularExpression(@"^[a-zA-Z]+[a-zA-Z]$", ErrorMessage = "Please enter only letters for State Name.")]
+    [Required(ErrorMessage = "Please enter State Name"), MaxLength(50)]
+   // [RegularExpression(@"^[a-zA-Z]+[a-zA-Z]$", ErrorMessage = "Please enter only letters for State Name.")]
     public string StateName { get; set; } = null!;
 
     public bool IsActive { get; set; }
@@ -26,7 +26,5 @@ public partial class State
 
     [NotMapped]
     public string CountryName { get; set; }
-
-    
-
+    public  Country Country { get; set; } = default!;
 }

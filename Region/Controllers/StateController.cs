@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Region.Models;
 using System.Diagnostics.Metrics;
 
@@ -46,26 +47,35 @@ namespace Region.Controllers
         public IActionResult AddState(State state)
         {
             CountryList();
-            if (_db.States.Where(u => u.StateName == state.StateName).Any())
+
+            ModelState.Remove("CountryId");
+            ModelState.Remove("CountryName");
+            ModelState.Remove("Country");
+            if (ModelState.IsValid)
             {
-                TempData["ErrorMessage"] = "State is already exists.";
-                return RedirectToAction("AddState");
-            }
-            else
-            {
-                var StateAdd = new State()
+                if (_db.States.Where(u => u.StateName == state.StateName).Any())
                 {
-                    CountryId = state.CountryId,
-                    StateName = state.StateName,
-                    CreateOn = DateTime.Now,
-                    IsActive = true,
-                };
-                _db.States.Add(StateAdd);
-                _db.SaveChanges();
+                    TempData["ErrorMessage"] = "State is already exists.";
+                    return RedirectToAction("AddState");
+                }
+                else
+                {
+
+                    var StateAdd = new State()
+                    {
+                        CountryId = state.CountryId,
+                        StateName = state.StateName,
+                        CreateOn = DateTime.Now,
+                        IsActive = true,
+                    };
+                    _db.States.Add(StateAdd);
+                    _db.SaveChanges();
 
 
-                return RedirectToAction("AddState");
+                    return RedirectToAction("AddState");
+                }
             }
+            return RedirectToAction("AddState");
         }
 
         [HttpGet]
@@ -85,6 +95,7 @@ namespace Region.Controllers
         [HttpPost]
         public IActionResult UpdateState(State state)
         {
+            CountryList();
             var updateState = _db.States.FirstOrDefault(x => x.StateId == state.StateId);
             if (updateState != null)
             {
@@ -127,7 +138,7 @@ namespace Region.Controllers
         private void CountryList()
         {
             var countryList = _db.Countries.ToList();
-            ViewBag.List = new SelectList(countryList, "CountryId", "CountryName");
+            ViewBag.countryList = new SelectList(countryList, "CountryId", "CountryName");
         }
     }
 }

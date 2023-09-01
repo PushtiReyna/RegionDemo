@@ -4,21 +4,19 @@
     var errorMessage = TempData["ErrorMessage"]?.ToString();
 }
 
-@if (!string.IsNullOrEmpty(errorMessage))
-{
-    <p class="text-danger" id='message'> @errorMessage</p>
-}
-
 
 <div class="col-4 offset-5">
     <form method="post" asp-action="AddCountry">
-
-        <label>
-            Country Name:
-        </label>
+       
+        <div>
+            <label>Country Name: </label>
             <input type="text" asp-for="CountryName" placeholder="Enter Country Name" />
-        
-        <span asp-validation-for="CountryName" class="text-danger"></span>
+            <span asp-validation-for="CountryName" class="text-danger"></span>
+            @if (!string.IsNullOrEmpty(errorMessage))
+            {
+                <p class="text-danger" id='message'> @errorMessage</p>
+            }
+        </div>
 
         <div class="m-3 text-center" style="margin-right: 131px  !important;">
 
@@ -40,7 +38,7 @@
                     <th>countryname</th>
                     <th>Actions</th>
                 </tr>
-               
+
 
 
                 @foreach (var item in ViewBag.Country)
@@ -58,7 +56,7 @@
 
                     </tr>
                 }
-                
+
 
             </table>
         </div>
@@ -70,6 +68,12 @@
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
+
+    <script type="text/javascript">
+        setTimeout(function () {
+            $('#message').hide(3000);
+        });
+    </script>
 }
 
 

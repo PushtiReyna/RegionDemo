@@ -6,7 +6,7 @@ CREATE TABLE Country(
 	IsActive [Bit] Not Null,
 	IsDelete [Bit] Not Null,
 	CreateOn [Datetime] Not Null,
-	UpdateOn [Datetime] Not Null
+	UpdateOn [Datetime] Null
 )	
 
 CREATE TABLE State(
@@ -16,7 +16,7 @@ CREATE TABLE State(
 	IsActive [Bit] Not Null,
 	IsDelete [Bit] Not Null,
 	CreateOn [Datetime] Not Null,
-	UpdateOn [Datetime] Not Null
+	UpdateOn [Datetime] Null
 )
 
 CREATE TABLE City(
@@ -27,7 +27,7 @@ CREATE TABLE City(
 	IsActive [Bit] Not Null,
 	IsDelete [Bit] Not Null,
 	CreateOn [Datetime] Not Null,
-	UpdateOn [Datetime] Not Null
+	UpdateOn [Datetime] Null
 )
 
  ALTER TABLE Country

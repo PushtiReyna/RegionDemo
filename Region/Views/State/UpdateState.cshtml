@@ -4,10 +4,7 @@
     var errorMessage = TempData["ErrorMessage"]?.ToString();
 }
 
-@if (!string.IsNullOrEmpty(errorMessage))
-{
-    <p class="text-danger" id='message'> @errorMessage</p>
-}
+
 
 <div class="col-4 offset-5">
     <form method="post" asp-action="UpdateState">
@@ -16,20 +13,25 @@
 
         <div>
             <label> Country: </label>
-            <select asp-for="CountryId" asp-items="ViewBag.List">
-                <option>select Country</option>
+            <select asp-for="CountryId" asp-items="ViewBag.countryList" style="width: 183px;">
+                <option>Select Country</option>
             </select>
             <span asp-validation-for="CountryId" class="text-danger"></span>
         </div>
 
         <div>
             <label> State:</label>
-            <input type="text" asp-for="StateName" placeholder="Enter state Name"/>
+            <input type="text" asp-for="StateName" placeholder="Enter State Name" style="margin-left: 17px; margin-top: 13px" />
             <span asp-validation-for="StateName" class="text-danger"></span>
+            @if (!string.IsNullOrEmpty(errorMessage))
+            {
+                <p class="text-danger" id='message'> @errorMessage</p>
+            }
         </div>
 
 
         <div class="m-3 text-center" style="margin-right: 131px  !important;">
+
             <button type="submit" class="btn btn-primary text-center">Update</button>
             <a class="btn btn-danger m-1 text-white text-center" asp-action="AddState">Cancel</a>
 
@@ -41,5 +43,10 @@
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
+    <script type="text/javascript">
+        setTimeout(function () {
+            $('#message').hide(3000);
+        });
+    </script>
 }
 

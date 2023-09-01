@@ -18,12 +18,12 @@ namespace Region.Controllers
         [HttpGet]
         public IActionResult AddCountry()
         {
-
             var CountryList = _db.Countries.ToList();
             ViewBag.Country = CountryList;
             
            return View();
         }
+
         [HttpPost]
         public IActionResult AddCountry(Country country)
         {

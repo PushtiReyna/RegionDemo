@@ -1,42 +1,39 @@
 ﻿@model Region.Models.City
 
-<h1>AddCity</h1>
+@{
+    var errorMessage = TempData["ErrorMessage"]?.ToString();
+}
 
 <div class="col-4 offset-5">
     <form method="post" asp-action="AddCity">
+
         <div style="margin-bottom:20px;">
             <label> Country: </label>
-            <select asp-for="CountryId" id="CountryId" asp-items="ViewBag.List" style="width: 183px;">
+            <select asp-for="CountryId" id="CountryId" asp-items="ViewBag.countryList" style="width: 183px;">
                 <option>select Country</option>
             </select>
-
         </div>
 
        
         <div style="margin-bottom:20px;">
             <label> State: </label>
-            <select asp-for="StateId" id="StateId" asp-items="@(new SelectList(string.Empty,"StateId","StateName"))" style="width: 183px;">
+            <select asp-for="StateId" id="StateId" asp-items="@(new SelectList(string.Empty,"StateId","StateName"))" style=" width: 183px; margin-left: 15px;" >
                 <option>select state</option>
             </select>
 
         </div>
-
-      @*  <div>
-            <label> state: </label>
-            <select class="form-control" asp-for="StateId" id="StateId" asp-items="@(new SelectList(string.Empty,"StateId","StateName"))">*@
-              @*  <select asp-for="StateId" id="coumtrylist" asp-items="ViewBag.stateList">*@
-           @*<option>select</option>*@
-             @* </select>
-
-        </div>*@
         
 
        @* @Html.DropDownListFor(m => m.StateId, new SelectList(@ViewBag.StateList),"select state")*@
 
         <div class="mb-2">
-            <label> City</label>
-            <input type="text" asp-for="CityName" placeholder="Enter City Name" style="margin-left: 17px;" />
-
+            <label> City:</label>
+            <input type="text" asp-for="CityName" placeholder="Enter City Name" style="margin-left: 12px; width: 179px;" />
+            <span asp-validation-for="StateName" class="text-danger"></span>
+            @if (!string.IsNullOrEmpty(errorMessage))
+            {
+                <p class="text-danger" id='message'> @errorMessage</p>
+            }
         </div>
 
 
@@ -100,6 +97,12 @@
         });
     });
   </script>
+
+<script type="text/javascript">
+    setTimeout(function () {
+        $('#message').hide(3000);
+    });
+</script>
 
 
 
