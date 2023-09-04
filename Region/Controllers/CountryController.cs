@@ -64,7 +64,6 @@ namespace Region.Controllers
                 TempData["ExceptionMessage"] = ex.Message;
                 return View();
             }
-
         }
 
         [HttpGet]

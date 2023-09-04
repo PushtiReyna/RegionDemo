@@ -16,6 +16,7 @@ public partial class City
     public int StateId { get; set; }
 
     [Required(ErrorMessage = "Please Enter City Name"), MaxLength(50)]
+    [RegularExpression(@"^[A-Za-z\s]*$", ErrorMessage = "Please enter only letters for City Name.")]
     public string CityName { get; set; } = null!;
 
     public bool IsActive { get; set; }

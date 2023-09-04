@@ -110,7 +110,7 @@ namespace Region.Controllers
                 {
                     List<State> statelist = new List<State>();
                     statelist = (from state in _db.States where state.CountryId == detailCity.CountryId select state).ToList();
-                    ViewBag.stateName = new SelectList(statelist, "StateId", "StateName").OrderBy(a => a.Text);
+                    ViewBag.stateName = new SelectList(statelist, "StateId", "StateName");
 
                     return View(detailCity);
                 }
@@ -134,7 +134,7 @@ namespace Region.Controllers
                 {
                     List<State> statelist = new List<State>();
                     statelist = (from state in _db.States where state.CountryId == updateCity.CountryId select state).ToList();
-                    ViewBag.stateName = new SelectList(statelist, "StateId", "StateName").OrderBy(a => a.Text);
+                    ViewBag.stateName = new SelectList(statelist, "StateId", "StateName");/*.OrderBy(a => a.Text)*/
 
 
                     updateCity.CountryId = city.CountryId;

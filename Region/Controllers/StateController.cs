@@ -31,7 +31,7 @@ namespace Region.Controllers
 
                 foreach (var item in StateList)
                 {
-                    var countryName = _db.Countries.FirstOrDefault(x => x.CountryId == Convert.ToInt64(item.CountryId));
+                    var countryName = _db.Countries.FirstOrDefault(x => x.CountryId == item.CountryId);
                     state = new State();
                     state.StateName = item.StateName;
                     state.StateId = item.StateId;
@@ -72,7 +72,6 @@ namespace Region.Controllers
                         var StateAdd = new State()
                         {
                             CountryId = state.CountryId,
-                           
                             StateName = state.StateName,
                             CreateOn = DateTime.Now,
                             IsActive = true,
@@ -103,7 +102,6 @@ namespace Region.Controllers
                 var detailState = _db.States.FirstOrDefault(x => x.StateId == id);
                 if (detailState != null)
                 {
-
                     return View(detailState);
                 }
                 return RedirectToAction("AddState");

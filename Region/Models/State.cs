@@ -10,11 +10,10 @@ public partial class State
     public int StateId { get; set; }
   
     [Required, Range(1,int.MaxValue,ErrorMessage = "Please Select Country.")]
-    [RegularExpression(@"^[a-zA-Z]+[a-zA-Z]$", ErrorMessage = "Please enter only letters for Country Name.")]
-   // ^[a-zA-Z][a-zA-Z\\s]+$
     public int CountryId { get; set; }
 
     [Required(ErrorMessage = "Please Enter State Name"), MaxLength(50)]
+    [RegularExpression(@"^[A-Za-z\s]*$", ErrorMessage = "Please enter only letters for State Name.")]
     public string StateName { get; set; } = null!;
 
     public bool IsActive { get; set; }
